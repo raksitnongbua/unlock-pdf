@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UnlockPDFAssemble from '@/app/components/Assemble/UnlockPDF';
 import axios from 'axios';
 
 const UnlockPDF = () => {
+  const [isLoading, setLoading] = useState(false);
+
   const handleSubmit = async (file: File, password: string) => {
     if (!file || password === '') return;
-
+    setLoading(true);
     try {
       const response = await axios({
         method: 'POST',
@@ -40,9 +42,10 @@ const UnlockPDF = () => {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
-  return <UnlockPDFAssemble onSubmit={handleSubmit} />;
+  return <UnlockPDFAssemble isLoading={isLoading} onSubmit={handleSubmit} />;
 };
 
 export default UnlockPDF;
