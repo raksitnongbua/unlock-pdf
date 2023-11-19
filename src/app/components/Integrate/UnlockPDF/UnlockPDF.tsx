@@ -1,4 +1,4 @@
-import React, { Ref, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import UnlockPDFAssemble from '@/app/components/Assemble/UnlockPDF';
 import axios from 'axios';
 import { Handler } from '@/app/components/Assemble/UnlockPDF/types';
