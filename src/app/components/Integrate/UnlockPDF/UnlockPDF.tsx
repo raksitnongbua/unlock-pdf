@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { createRef, useState } from 'react';
 import UnlockPDFAssemble from '@/app/components/Assemble/UnlockPDF';
 import axios from 'axios';
+import { Handler } from '@/app/components/Assemble/UnlockPDF/types';
 
 const UnlockPDF = () => {
   const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const formRef = createRef<Handler>();
 
   const handleSubmit = async (file: File, password: string) => {
     if (!file || password === '') return;
@@ -38,14 +41,22 @@ const UnlockPDF = () => {
 
       window.URL.revokeObjectURL(url);
 
-      //TODO: add function clear file after unlock file done
+      formRef.current?.onReset();
     } catch (error) {
       console.error(error);
+      setError(true);
     }
     setLoading(false);
   };
 
-  return <UnlockPDFAssemble isLoading={isLoading} onSubmit={handleSubmit} />;
+  return (
+    <UnlockPDFAssemble
+      ref={formRef}
+      isLoading={isLoading}
+      onSubmit={handleSubmit}
+      error={error}
+    />
+  );
 };
 
 export default UnlockPDF;
