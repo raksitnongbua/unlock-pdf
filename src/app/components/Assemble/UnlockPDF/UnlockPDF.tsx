@@ -26,6 +26,10 @@ const UnlockPDF = forwardRef<Handler, Props>((props, ref) => {
   useImperativeHandle(ref, () => ({
     onReset: () => {
       acceptedFiles.length = 0;
+      console.log(
+        '🚀 ~ file: UnlockPdf.tsx:29 ~ useImperativeHandle ~ acceptedFiles:',
+        acceptedFiles
+      );
       acceptedFiles.splice(0, acceptedFiles.length);
       setPassword('');
     },

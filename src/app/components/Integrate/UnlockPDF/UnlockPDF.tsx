@@ -1,16 +1,17 @@
-import React, { createRef, useState } from 'react';
+import React, { Ref, useRef, useState } from 'react';
 import UnlockPDFAssemble from '@/app/components/Assemble/UnlockPDF';
 import axios from 'axios';
-import { Handler } from '@/app/components/Assemble/UnlockPDF/types';
+import { Handler } from '../../Assemble/UnlockPDF/types';
 
 const UnlockPDF = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const formRef = createRef<Handler>();
+  const formRef = useRef<Handler>(null);
 
   const handleSubmit = async (file: File, password: string) => {
     if (!file || password === '') return;
     setLoading(true);
+
     try {
       const response = await axios({
         method: 'POST',
@@ -19,34 +20,29 @@ const UnlockPDF = () => {
           'Content-Type': 'multipart/form-data',
         },
         data: { file, password },
-        onUploadProgress: ({ progress }) => {
-          if (!progress) return;
-          console.log((progress * 100).toFixed(2));
-        },
         responseType: 'blob',
       });
 
-      // download automatically
       const blob = new Blob([response.data], {
         type: response.headers['content-type'],
       });
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `unlocked-${file.name}`);
-
-      document.body.appendChild(link);
-      link.click();
-
-      window.URL.revokeObjectURL(url);
-
+      autoDownloadFile(blob, file.name);
       formRef.current?.onReset();
     } catch (error) {
       console.error(error);
       setError(true);
     }
     setLoading(false);
+  };
+
+  const autoDownloadFile = (blob: Blob, fileName: string) => {
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `unlocked-${fileName}`);
+    document.body.appendChild(link);
+    link.click();
+    window.URL.revokeObjectURL(url);
   };
 
   return (
