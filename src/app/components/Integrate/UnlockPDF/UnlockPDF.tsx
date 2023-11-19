@@ -1,7 +1,7 @@
 import React, { Ref, useRef, useState } from 'react';
 import UnlockPDFAssemble from '@/app/components/Assemble/UnlockPDF';
 import axios from 'axios';
-import { Handler } from '../../Assemble/UnlockPDF/types';
+import { Handler } from '@/app/components/Assemble/UnlockPDF/types';
 
 const UnlockPDF = () => {
   const [isLoading, setLoading] = useState(false);
