@@ -23,7 +23,9 @@ const UnlockPDFForm = (props: Props) => {
 
   return (
     <div className='container mx-auto mt-10'>
-      <h2 className='text-2xl font-bold mb-5'>Unlock PDF</h2>
+      <h2 className='text-2xl font-bold mb-5'>
+        Free Online PDF Password Remover
+      </h2>
 
       <form onSubmit={onSubmit}>
         <div className='mb-5'>
