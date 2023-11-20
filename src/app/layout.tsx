@@ -5,8 +5,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Unlock PDF',
-  description: 'Unlock PDF file with password',
+  title: 'Free Online PDF Password Remover',
+  description: 'Unlock PDF files. Remove PDF password',
 };
 
 export default function RootLayout({

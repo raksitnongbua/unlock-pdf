@@ -11,6 +11,8 @@ const UnlockPDFForm = (props: Props) => {
     password,
     onPasswordChange,
     isLoading,
+    error,
+    requiredPassword,
   } = props;
 
   const files = acceptedFiles.map((file) => (
@@ -21,7 +23,9 @@ const UnlockPDFForm = (props: Props) => {
 
   return (
     <div className='container mx-auto mt-10'>
-      <h2 className='text-2xl font-bold mb-5'>Unlock PDF</h2>
+      <h2 className='text-2xl font-bold mb-5'>
+        Free Online PDF Password Remover
+      </h2>
 
       <form onSubmit={onSubmit}>
         <div className='mb-5'>
@@ -39,19 +43,24 @@ const UnlockPDFForm = (props: Props) => {
         <aside>
           <ul>{files}</ul>
         </aside>
-        {files.length > 0 && (
-          <div className='mb-5 mt-2'>
-            <label className='block mb-2'>Enter Password</label>
-            <input
-              type='password'
-              value={password}
-              onChange={onPasswordChange}
-              className='text-black p-1'
-              placeholder='password'
-            />
-          </div>
+        {requiredPassword && (
+          <>
+            <div className='mb-5 mt-2'>
+              <label className='block mb-2'>Enter Password</label>
+              <input
+                type='password'
+                value={password}
+                onChange={onPasswordChange}
+                className='text-black p-1'
+                placeholder='password'
+              />
+              {error && (
+                <div className='text-red-500 text-sm mt-1'>{error}</div>
+              )}
+            </div>
+            <UnlockButton isLoading={isLoading} />
+          </>
         )}
-        <UnlockButton isLoading={isLoading} />
       </form>
     </div>
   );
